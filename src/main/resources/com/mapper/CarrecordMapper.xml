@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.CarrecordMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Carrecord" >
+    <id column="RID" property="rid" jdbcType="INTEGER" />
+    <result column="CarNumber" property="carnumber" jdbcType="VARCHAR" />
+    <result column="ParkPrice" property="parkprice" jdbcType="VARCHAR" />
+    <result column="InTime" property="intime" jdbcType="TIMESTAMP" />
+    <result column="OutTime" property="outtime" jdbcType="TIMESTAMP" />
+    <result column="Position" property="position" jdbcType="VARCHAR" />
+    <result column="CarState" property="carstate" jdbcType="INTEGER" />
+    <result column="CarStateDes" property="carstatedes" jdbcType="VARCHAR" />
+    <result column="InTimeString" property="intimestring" jdbcType="VARCHAR" />
+    <result column="OutTimeString" property="outtimestring" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RID, CarNumber, ParkPrice,DATE_FORMAT(InTime,'%Y-%m-%d %H:%i:%s') as InTime , DATE_FORMAT(OutTime,'%Y-%m-%d %H:%i:%s') as OutTime, Position, CarState, CarStateDes, InTimeString,
+    OutTimeString
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.CarrecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from carrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from carrecord
+    where RID = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from carrecord
+    where RID = #{rid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.CarrecordExample" >
+    delete from carrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Carrecord" >
+    insert into carrecord (RID, CarNumber, ParkPrice, 
+      InTime, OutTime, Position, 
+      CarState, CarStateDes, InTimeString, 
+      OutTimeString)
+    values (#{rid,jdbcType=INTEGER}, #{carnumber,jdbcType=VARCHAR}, #{parkprice,jdbcType=VARCHAR}, 
+      #{intime,jdbcType=TIMESTAMP}, #{outtime,jdbcType=TIMESTAMP}, #{position,jdbcType=VARCHAR}, 
+      #{carstate,jdbcType=INTEGER}, #{carstatedes,jdbcType=VARCHAR}, #{intimestring,jdbcType=VARCHAR}, 
+      #{outtimestring,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Carrecord" >
+    insert into carrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        RID,
+      </if>
+      <if test="carnumber != null" >
+        CarNumber,
+      </if>
+      <if test="parkprice != null" >
+        ParkPrice,
+      </if>
+      <if test="intime != null" >
+        InTime,
+      </if>
+      <if test="outtime != null" >
+        OutTime,
+      </if>
+      <if test="position != null" >
+        Position,
+      </if>
+      <if test="carstate != null" >
+        CarState,
+      </if>
+      <if test="carstatedes != null" >
+        CarStateDes,
+      </if>
+      <if test="intimestring != null" >
+        InTimeString,
+      </if>
+      <if test="outtimestring != null" >
+        OutTimeString,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="carnumber != null" >
+        #{carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parkprice != null" >
+        #{parkprice,jdbcType=VARCHAR},
+      </if>
+      <if test="intime != null" >
+        #{intime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outtime != null" >
+        #{outtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="carstate != null" >
+        #{carstate,jdbcType=INTEGER},
+      </if>
+      <if test="carstatedes != null" >
+        #{carstatedes,jdbcType=VARCHAR},
+      </if>
+      <if test="intimestring != null" >
+        #{intimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="outtimestring != null" >
+        #{outtimestring,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.CarrecordExample" resultType="java.lang.Integer" >
+    select count(*) from carrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update carrecord
+    <set >
+      <if test="record.rid != null" >
+        RID = #{record.rid,jdbcType=INTEGER},
+      </if>
+      <if test="record.carnumber != null" >
+        CarNumber = #{record.carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkprice != null" >
+        ParkPrice = #{record.parkprice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intime != null" >
+        InTime = #{record.intime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.outtime != null" >
+        OutTime = #{record.outtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.position != null" >
+        Position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carstate != null" >
+        CarState = #{record.carstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.carstatedes != null" >
+        CarStateDes = #{record.carstatedes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intimestring != null" >
+        InTimeString = #{record.intimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outtimestring != null" >
+        OutTimeString = #{record.outtimestring,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update carrecord
+    set RID = #{record.rid,jdbcType=INTEGER},
+      CarNumber = #{record.carnumber,jdbcType=VARCHAR},
+      ParkPrice = #{record.parkprice,jdbcType=VARCHAR},
+      InTime = #{record.intime,jdbcType=TIMESTAMP},
+      OutTime = #{record.outtime,jdbcType=TIMESTAMP},
+      Position = #{record.position,jdbcType=VARCHAR},
+      CarState = #{record.carstate,jdbcType=INTEGER},
+      CarStateDes = #{record.carstatedes,jdbcType=VARCHAR},
+      InTimeString = #{record.intimestring,jdbcType=VARCHAR},
+      OutTimeString = #{record.outtimestring,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Carrecord" >
+    update carrecord
+    <set >
+      <if test="carnumber != null" >
+        CarNumber = #{carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parkprice != null" >
+        ParkPrice = #{parkprice,jdbcType=VARCHAR},
+      </if>
+      <if test="intime != null" >
+        InTime = #{intime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outtime != null" >
+        OutTime = #{outtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="position != null" >
+        Position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="carstate != null" >
+        CarState = #{carstate,jdbcType=INTEGER},
+      </if>
+      <if test="carstatedes != null" >
+        CarStateDes = #{carstatedes,jdbcType=VARCHAR},
+      </if>
+      <if test="intimestring != null" >
+        InTimeString = #{intimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="outtimestring != null" >
+        OutTimeString = #{outtimestring,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RID = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Carrecord" >
+    update carrecord
+    set CarNumber = #{carnumber,jdbcType=VARCHAR},
+      ParkPrice = #{parkprice,jdbcType=VARCHAR},
+      InTime = #{intime,jdbcType=TIMESTAMP},
+      OutTime = #{outtime,jdbcType=TIMESTAMP},
+      Position = #{position,jdbcType=VARCHAR},
+      CarState = #{carstate,jdbcType=INTEGER},
+      CarStateDes = #{carstatedes,jdbcType=VARCHAR},
+      InTimeString = #{intimestring,jdbcType=VARCHAR},
+      OutTimeString = #{outtimestring,jdbcType=VARCHAR}
+    where RID = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

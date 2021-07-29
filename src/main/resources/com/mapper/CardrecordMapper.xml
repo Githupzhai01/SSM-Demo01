@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CardrecordMapper">
+  <resultMap id="BaseResultMap" type="com.domain.Cardrecord">
+    <id column="CID" jdbcType="INTEGER" property="cid" />
+    <result column="CarNumber" jdbcType="VARCHAR" property="carnumber" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <result column="Phone" jdbcType="VARCHAR" property="phone" />
+    <result column="StartTime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="EndTime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="OperatorName" jdbcType="VARCHAR" property="operatorname" />
+    <result column="Level" jdbcType="INTEGER" property="level" />
+    <result column="LvelDes" jdbcType="VARCHAR" property="lveldes" />
+    <result column="StartTimeString" jdbcType="VARCHAR" property="starttimestring" />
+    <result column="EndTimeString" jdbcType="VARCHAR" property="endtimestring" />
+    <result column="Frequency" jdbcType="INTEGER" property="frequency" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CID, CarNumber, UserName, Phone, StartTime, EndTime, OperatorName, Level, LvelDes, 
+    StartTimeString, EndTimeString, Frequency
+  </sql>
+  <select id="selectByExample" parameterType="com.domain.CardrecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cardrecord
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cardrecord
+    where CID = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cardrecord
+    where CID = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.CardrecordExample">
+    delete from cardrecord
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Cardrecord">
+    insert into cardrecord (CID, CarNumber, UserName, 
+      Phone, StartTime, EndTime, 
+      OperatorName, Level, LvelDes, 
+      StartTimeString, EndTimeString, Frequency
+      )
+    values (#{cid,jdbcType=INTEGER}, #{carnumber,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{operatorname,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{lveldes,jdbcType=VARCHAR}, 
+      #{starttimestring,jdbcType=VARCHAR}, #{endtimestring,jdbcType=VARCHAR}, #{frequency,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Cardrecord">
+    insert into cardrecord
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        CID,
+      </if>
+      <if test="carnumber != null">
+        CarNumber,
+      </if>
+      <if test="username != null">
+        UserName,
+      </if>
+      <if test="phone != null">
+        Phone,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="endtime != null">
+        EndTime,
+      </if>
+      <if test="operatorname != null">
+        OperatorName,
+      </if>
+      <if test="level != null">
+        Level,
+      </if>
+      <if test="lveldes != null">
+        LvelDes,
+      </if>
+      <if test="starttimestring != null">
+        StartTimeString,
+      </if>
+      <if test="endtimestring != null">
+        EndTimeString,
+      </if>
+      <if test="frequency != null">
+        Frequency,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="carnumber != null">
+        #{carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorname != null">
+        #{operatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="lveldes != null">
+        #{lveldes,jdbcType=VARCHAR},
+      </if>
+      <if test="starttimestring != null">
+        #{starttimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="endtimestring != null">
+        #{endtimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.CardrecordExample" resultType="java.lang.Integer">
+    select count(*) from cardrecord
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cardrecord
+    <set>
+      <if test="record.cid != null">
+        CID = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.carnumber != null">
+        CarNumber = #{record.carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null">
+        UserName = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        Phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null">
+        StartTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null">
+        EndTime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorname != null">
+        OperatorName = #{record.operatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null">
+        Level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.lveldes != null">
+        LvelDes = #{record.lveldes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttimestring != null">
+        StartTimeString = #{record.starttimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endtimestring != null">
+        EndTimeString = #{record.endtimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="record.frequency != null">
+        Frequency = #{record.frequency,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cardrecord
+    set CID = #{record.cid,jdbcType=INTEGER},
+      CarNumber = #{record.carnumber,jdbcType=VARCHAR},
+      UserName = #{record.username,jdbcType=VARCHAR},
+      Phone = #{record.phone,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=TIMESTAMP},
+      EndTime = #{record.endtime,jdbcType=TIMESTAMP},
+      OperatorName = #{record.operatorname,jdbcType=VARCHAR},
+      Level = #{record.level,jdbcType=INTEGER},
+      LvelDes = #{record.lveldes,jdbcType=VARCHAR},
+      StartTimeString = #{record.starttimestring,jdbcType=VARCHAR},
+      EndTimeString = #{record.endtimestring,jdbcType=VARCHAR},
+      Frequency = #{record.frequency,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Cardrecord">
+    update cardrecord
+    <set>
+      <if test="carnumber != null">
+        CarNumber = #{carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        StartTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        EndTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorname != null">
+        OperatorName = #{operatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        Level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="lveldes != null">
+        LvelDes = #{lveldes,jdbcType=VARCHAR},
+      </if>
+      <if test="starttimestring != null">
+        StartTimeString = #{starttimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="endtimestring != null">
+        EndTimeString = #{endtimestring,jdbcType=VARCHAR},
+      </if>
+      <if test="frequency != null">
+        Frequency = #{frequency,jdbcType=INTEGER},
+      </if>
+    </set>
+    where CID = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Cardrecord">
+    update cardrecord
+    set CarNumber = #{carnumber,jdbcType=VARCHAR},
+      UserName = #{username,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=TIMESTAMP},
+      EndTime = #{endtime,jdbcType=TIMESTAMP},
+      OperatorName = #{operatorname,jdbcType=VARCHAR},
+      Level = #{level,jdbcType=INTEGER},
+      LvelDes = #{lveldes,jdbcType=VARCHAR},
+      StartTimeString = #{starttimestring,jdbcType=VARCHAR},
+      EndTimeString = #{endtimestring,jdbcType=VARCHAR},
+      Frequency = #{frequency,jdbcType=INTEGER}
+    where CID = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

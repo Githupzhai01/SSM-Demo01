@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Notice" >
+    <id column="Noid" property="noid" jdbcType="INTEGER" />
+    <result column="NoName" property="noname" jdbcType="VARCHAR" />
+    <result column="NoTime" property="notime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Noid, NoName, NoTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.NoticeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where Noid = #{noid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notice
+    where Noid = #{noid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.NoticeExample" >
+    delete from notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Notice" >
+    insert into notice (Noid, NoName, NoTime
+      )
+    values (#{noid,jdbcType=INTEGER}, #{noname,jdbcType=VARCHAR}, #{notime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Notice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noid != null" >
+        Noid,
+      </if>
+      <if test="noname != null" >
+        NoName,
+      </if>
+      <if test="notime != null" >
+        NoTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noid != null" >
+        #{noid,jdbcType=INTEGER},
+      </if>
+      <if test="noname != null" >
+        #{noname,jdbcType=VARCHAR},
+      </if>
+      <if test="notime != null" >
+        #{notime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.NoticeExample" resultType="java.lang.Integer" >
+    select count(*) from notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update notice
+    <set >
+      <if test="record.noid != null" >
+        Noid = #{record.noid,jdbcType=INTEGER},
+      </if>
+      <if test="record.noname != null" >
+        NoName = #{record.noname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notime != null" >
+        NoTime = #{record.notime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update notice
+    set Noid = #{record.noid,jdbcType=INTEGER},
+      NoName = #{record.noname,jdbcType=VARCHAR},
+      NoTime = #{record.notime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Notice" >
+    update notice
+    <set >
+      <if test="noname != null" >
+        NoName = #{noname,jdbcType=VARCHAR},
+      </if>
+      <if test="notime != null" >
+        NoTime = #{notime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Noid = #{noid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Notice" >
+    update notice
+    set NoName = #{noname,jdbcType=VARCHAR},
+      NoTime = #{notime,jdbcType=TIMESTAMP}
+    where Noid = #{noid,jdbcType=INTEGER}
+  </update>
+</mapper>
